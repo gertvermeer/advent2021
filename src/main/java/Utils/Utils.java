@@ -43,4 +43,32 @@ public class Utils {
         return resultsList;
     }
 
+    public List<String> readTranspodedFile(String filename){
+        List<String> resultsList = new ArrayList<String>();
+        try {
+
+            boolean initialized = false;
+
+            File myObj = new File("src/main/resources/"+ filename);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String readString = myReader.nextLine();
+                if (!initialized){
+                    for (int t = 0 ; t<readString.length();t++){
+                        resultsList.add("");
+                    }
+                    initialized = true;
+                }
+                for (int t=0; t<readString.length();t++){
+                    resultsList.set(t,resultsList.get(t)+readString.charAt(t));
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return resultsList;
+    }
+
 }
