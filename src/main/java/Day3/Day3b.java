@@ -3,34 +3,34 @@ package Day3;
 
 import Utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Day3b {
 
     Utils utils = new Utils();
 
-    public Integer executeDay1(String filename){
+    public Integer execute(String filename){
 
-        List<Integer> inputList = utils.readIntegerFile(filename);
-        List<Integer> averageList = new ArrayList<>();
-        int numberOfDecreases = 0;
+        List<String> inputList = utils.readTranspodedFile(filename);
 
-        for (int  t=0 ; t< inputList.size()-2;t++){
-            averageList.add(inputList.get(t)
-                            + inputList.get(t+1)
-                            + inputList.get(t+2));
-        }
+        int number1 = 0;
 
+        String comonString = "";
+        String leastString = "";
 
-        for (int  t=1; t< averageList.size();t++){
-
-            if (averageList.get(t) > averageList.get(t-1)){
-                numberOfDecreases ++;
+        for (String input: inputList){
+            if(input.chars().filter(s -> s == '1').count() > input.length()/2){
+                comonString = comonString +"1";
+                leastString = leastString + "0";
+            } else {
+                comonString = comonString + "0";
+                leastString = leastString +"1";
             }
         }
 
-        return numberOfDecreases;
+
+
+        return Integer.parseInt(comonString,2) * Integer.parseInt(leastString,2);
     }
 
 
