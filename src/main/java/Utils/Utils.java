@@ -10,6 +10,10 @@ public class Utils {
 
 
     public List<String> readfile(String filename){
+        if(!filename.contains(".txt")){
+            filename = "input"+filename+".txt";
+        }
+
         List<String> resultsList = new ArrayList<String>();
         try {
             File myObj = new File("src/main/resources/"+ filename);
