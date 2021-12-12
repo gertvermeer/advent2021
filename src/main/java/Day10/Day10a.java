@@ -3,15 +3,13 @@ package Day10;
 import Day9.Coord;
 import Utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Day10a extends Utils {
 
     HashMap<Character, Character> closingChar = new HashMap<>();
     HashMap<Character, Integer> scoreMap = new HashMap<>();
+    List<Character> stacklist = new ArrayList<>();
 
     public Integer execute(String filename) {
 
@@ -24,6 +22,10 @@ public class Day10a extends Utils {
         closingChar.put('}', '{');
         closingChar.put(']', '[');
         closingChar.put('>', '<');
+
+        stacklist.add('a');
+        stacklist.add('a');
+
 
         scoreMap = new HashMap<>();
         scoreMap.put(')', 3);
@@ -44,25 +46,18 @@ public class Day10a extends Utils {
     }
 
     private Integer processRow(String row) {
-        HashMap<Character, Integer> stack = new HashMap<>();
-        stack.put('(', 0);
-        stack.put('[', 0);
-        stack.put('{', 0);
-        stack.put('<', 0);
 
         boolean valid = true;
         for (Character code : row.toCharArray()) {
             if (code.equals('(') || code.equals('{') || code.equals('[') || code.equals('<')) {
-                stack.put(code, stack.get(code) + 1);
+                stacklist.add(code);
                 continue;
             }
-
             Character open = closingChar.get(code);
-            stack.put(open, stack.get(open) -1);
-            if(stack.get(open) == 0){
-                if (countGrid(stack) >0){
-                    return scoreMap.get(code);
-                }
+             if(stacklist.get(stacklist.size()-1).equals(open)){
+                stacklist.remove(stacklist.size() - 1);
+            } else{
+                return scoreMap.get(code);
             }
 
 
@@ -72,14 +67,6 @@ public class Day10a extends Utils {
     }
 
 
-
-    public Integer countGrid(HashMap<Character, Integer> stack) {
-        int sum = 0;
-        for (Map.Entry<Character, Integer> entry : stack.entrySet()) {
-            sum = sum + entry.getValue();
-        }
-        return sum;
-    }
 
 
 }
