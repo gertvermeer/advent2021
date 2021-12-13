@@ -2,12 +2,9 @@ package Day12;
 
 import Utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class Day12a extends Utils {
+public class Day12b extends Utils {
 
     Map<String,List<String>> map= new HashMap<>();
 
@@ -25,7 +22,7 @@ public class Day12a extends Utils {
             addRoute(rowArr[0],rowArr[1]);
         }
         findRoute("start");
-
+        Collections.sort(routList);
         return routList.size();
     }
 
@@ -43,14 +40,32 @@ public class Day12a extends Utils {
             if(node.equals("start")){
                 continue;
             }
-            if(Character.isLowerCase(node.charAt(0)) && currentRoute.contains(node)){
+
+            if (Character.isLowerCase(node.charAt(0)) && ((currentRoute.split(node,-1).length-1) >1)){
                 continue;
             }
+
+            if (Character.isLowerCase(node.charAt(0)) && currentRoute.contains(node) && !singleCaveNotVisitedTwice(currentRoute)) {
+                continue;
+            }
+
 
             findRoute(currentRoute+ "-"+node);
 
         }
         return;
+    }
+
+    public boolean singleCaveNotVisitedTwice(String route){
+        List<String> nodeList = List.of(route.split("-"));
+        boolean res = true;
+        for(String node: nodeList){
+            if(Character.isLowerCase(node.charAt(0))){
+                res = res && (route.split(node,-1).length-1 <2);
+            }
+
+        }
+        return res;
     }
 
     public void addRoute(String from, String to){
