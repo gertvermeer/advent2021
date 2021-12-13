@@ -51,6 +51,8 @@ public class Day13a extends Utils {
 
 
         printGrid();
+        fold(foldListDir.get(0),foldListVal.get(0));
+        printGrid();
 
 
     return 0L;
@@ -59,14 +61,37 @@ public class Day13a extends Utils {
 
     private void fold (String dir, Integer value){
         if(dir.equals("y")){
-
-
-
+            for(int yc = value+1; yc<yMax;yc++){
+                for(int xc = 0; xc<xMax;xc++){
+                    int pr = array[xc][yc-(yc-value+1)];
+                    int pra = array[xc][yc];
+                    if(array[xc][yc] ==1){
+                        array[xc][value-(yc-value)] = array[xc][yc];
+                    }
+                }
+            }
+            yMax = value-1;
         }
+
+        if(dir.equals("x")){
+            for(int xc = value+1; xc<xMax;xc++){
+                for(int yc = 0; yc<yMax;yc++){
+                    int pr = array[xc][yc-(yc-value+1)];
+                    int pra = array[xc][yc];
+                    if(array[xc][yc] ==1){
+                        array[value -(xc-value)][yc] = array[xc][yc];
+                    }
+                }
+            }
+            xMax = value-1;
+        }
+
     }
 
     private void  printGrid(){
-
+        System.out.println();
+        System.out.println("Grid:");
+        System.out.println("");
         for(int y = 0; y<yMax; y++){
             for (int x=0 ; x<xMax; x++){
                 if (array[x][y] ==1){
