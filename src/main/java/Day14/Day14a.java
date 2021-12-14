@@ -2,17 +2,18 @@ package Day14;
 
 import Utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Day14a extends Utils {
 
-    List<String> fromList = new ArrayList<>();
-    List<String> toList = new ArrayList<>();
+
+    HashMap<String, String> rulesMap = new HashMap<>();
+
     String polymer;
     int numRules = 0;
 
-    public Integer execute(String filename) {
+    public Long execute(String filename) {
         List<String> inputList = readfile(filename);
 
         polymer = inputList.get(0);
@@ -20,32 +21,51 @@ public class Day14a extends Utils {
 
         for(int t=2; t<inputList.size();t++){
             String [] row = inputList.get(t).split("->");
-            fromList.add(row[0].trim());
             String newElem = row[0].trim().charAt(0) + row[1].trim() + row[0].trim().charAt(1);
-            toList.add(newElem);
+            rulesMap.put(row[0].trim(), newElem);
         }
 
 
-        for(int step = 0; step<5;step++){
-
+        for(int step = 0; step<10;step++){
             procces();
-            System.out.println("polymer: " + polymer);
-
+ //           System.out.println("polymer: " + polymer);
         }
 
+        Set<Character> distinctChars
+                = polymer.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toCollection(TreeSet::new));
 
-        return 0;
+
+        long max = 0;
+        long min = 999999999999999999L;
+        for(Character c : distinctChars){
+            long num = polymer.chars().filter(ch -> ch==c).count();
+            min = Math.min(min, num);
+            max = Math.max(max,num);
+        }
+
+        System.out.println("Lengt: " + polymer.length());
+        return max-min;
     }
 
     private void procces(){
-        for(int rule = 0; rule< numRules; rule++){
 
-            int pointer = 1;
-            while (pointer< polymer.length()){
+        int pointer = 2;
+        while (pointer<= polymer.length()){
+            String check = polymer.substring(pointer-2,pointer);
+            if (rulesMap.containsKey(polymer.substring(pointer-2,pointer))){
 
+                polymer = polymer.substring(0,pointer-2) +
+                        rulesMap.get(polymer.substring(pointer-2,pointer)) +
+                        polymer.substring(pointer);
+                pointer ++;
 
             }
+            pointer ++;
+
         }
+
     }
 
 
