@@ -11,9 +11,8 @@ class Day13aTest {
 
         Day13a day = new Day13a();
 
-        //day.execute("13a-dev");
+        System.out.println(day.execute("13a-dev"));
         day = new Day13a();
-
-        day.execute("13");
+        System.out.println(day.execute("13"));
     }
 }
