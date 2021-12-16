@@ -13,21 +13,30 @@ public class Day16a extends Utils {
 
         List<String> inputList = readfile(filename);
         binInput = hexToBinary(inputList.get(0));
-        Integer version = Integer.parseInt(binInput.substring(0,3),2);
-        Integer packetId = Integer.parseInt(binInput.substring(3,6),2);
+        Integer version = binToInt(0,3);
+        Integer packetId = binToInt(3,6);
+        System.out.println("version: " + version + " ID: "+ packetId);
 
+        int pointer = 0;
 
         if(packetId !=4){
+            int length = detLength(7);
+            System.out.println("Length: "+ length);
 
-            Integer lengtId = binToInt(6,7);
-            System.out.println("lengtId: " + lengtId);
+
+
+            while(pointer< length){
+
+
+
+            }
 
 
 
 
         }
 
-        System.out.println("version: " + version + " ID: "+ packetId);
+
 
 
 
@@ -35,6 +44,15 @@ public class Day16a extends Utils {
         return 0;
     }
 
+
+
+    private int detLength(int p){
+        int id =binToInt(p,p+1);
+        if(id == 0){
+            return 15;
+        }
+        return 11;
+    }
 
     private Integer binToInt(int start, int end){
         return Integer.parseInt(binInput.substring(start,end),2);

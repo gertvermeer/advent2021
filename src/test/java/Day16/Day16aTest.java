@@ -12,4 +12,11 @@ class Day16aTest {
         Day16a day = new Day16a();
         System.out.println(day.execute("16-dev"));
     }
+
+    @Test
+    void executea() {
+
+        Day16a day = new Day16a();
+        System.out.println(day.execute("16"));
+    }
 }
