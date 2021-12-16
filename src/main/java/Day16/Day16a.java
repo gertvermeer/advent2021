@@ -8,6 +8,8 @@ public class Day16a extends Utils {
 
     String binInput;
 
+    Pointer pointer = new Pointer(0);
+
     public long execute(String filename) {
 
 
@@ -17,41 +19,67 @@ public class Day16a extends Utils {
         Integer packetId = binToInt(3,6);
         System.out.println("version: " + version + " ID: "+ packetId);
 
-        int pointer = 0;
+        int L=0;
 
-        if(packetId !=4){
-            int length = detLength(7);
-            System.out.println("Length: "+ length);
+        if(packetId !=4) {
+            pointer.setValue(6);
+            L = getPacket(pointer);
+            System.out.println("L: " + L);
+        }
 
+        while (pointer.getValue()<L){
 
+            Paket p = readPacket(pointer);
 
-            while(pointer< length){
-
-
-
-            }
-
-
+            System.out.println("Packet: "+ getPacket(pointer));
 
 
         }
-
-
-
-
 
 
         return 0;
     }
 
 
+    private Paket readPacket(Pointer p){
+        Paket paket = new Paket();
+        paket.setVersion(binToInt(p.getValue(),p.getValue()+3));
+        p.increase(3);
+        paket.setId(binToInt(p.getValue(),p.getValue()+3));
+        p.increase(3);
+        paket.setI(binToInt(p.getValue(),p.getValue()+1));
+        p.increase(1);
+        if (paket.getI() ==0){
+            p.setValue(binToInt(p.getValue(),p.getValue()+11));
+            p.increase(11);
+        } else {
+            p.setValue(binToInt(p.getValue(),p.getValue()+15));
+            p.increase(15);
+        }
+        return paket;
+    }
 
-    private int detLength(int p){
+    private int getPacket(Pointer p){
+        int res =0;
+        int id =binToInt(p.getValue(),p.getValue()+1);
+        if(id == 0){
+            res= binToInt(p.getValue()+1,p.getValue()+16);
+            pointer.increase(16);
+        } else {
+            res = binToInt(p.getValue()+1,p.getValue()+12);
+            pointer.increase(12);
+        }
+        return res;
+    }
+
+    private int detLength(int p, Pointer pointer){
         int id =binToInt(p,p+1);
         if(id == 0){
-            return 15;
+            pointer.increase(16);
+            return binToInt(p+1,p+16);
         }
-        return 11;
+        pointer.increase(12);
+        return binToInt(p+1,p+12);
     }
 
     private Integer binToInt(int start, int end){
