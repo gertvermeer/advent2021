@@ -26,4 +26,12 @@ class Day14aTest {
         Day14b day = new Day14b();
         System.out.println(day.execute("14a-dev"));
     }
+
+    @Test
+    void executeb2() {
+
+        Day14b day = new Day14b();
+        System.out.println(day.execute("14a"));
+    }
+
 }

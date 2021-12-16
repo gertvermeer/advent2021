@@ -22,11 +22,11 @@ public class Day14b extends Utils {
         polymer = inputList.get(0);
 
         for(int t = 0; t<= polymer.length()-2; t++){
-            increaseMap(polymer.substring(t,t+2), countTupleMap,1);
+            increaseMap(polymer.substring(t,t+2), countTupleMap,BigInteger.valueOf(1));
 
         }
         for(int t = 0; t<= polymer.length()-1; t++){
-            increaseMap(polymer.substring(t,t+1), countCharMap,1);
+            increaseMap(polymer.substring(t,t+1), countCharMap,BigInteger.valueOf(1));
         }
 
 
@@ -39,23 +39,33 @@ public class Day14b extends Utils {
         }
 
 
-        for(int step = 0; step < 2;step++){
+        for(int step = 0; step < 40;step++){
             procces();
         }
 
         BigInteger max = BigInteger.valueOf(0);
         BigInteger min = BigInteger.valueOf(-1);
+        for(Map.Entry<String, BigInteger> item:countCharMap.entrySet()){
+            if(min.equals(BigInteger.valueOf(-1))){
+                min = countCharMap.get(item.getKey());
+                max = countCharMap.get(item.getKey());
+            } else {
+                max = max.max(countCharMap.get(item.getKey()));
+                min = min.min(countCharMap.get(item.getKey()));
+            }
+        }
 
+        System.out.println(" Min : " + min.toString() + "Max:" + max.toString());
 
-        return BigInteger.valueOf(0);
+        return max.subtract(min);
     }
 
 
-    private void increaseMap(String key, HashMap<String, BigInteger> map, int value){
+    private void increaseMap(String key, HashMap<String, BigInteger> map, BigInteger value){
         if(map.containsKey(key)){
-            map.put(key, map.get(key).add(BigInteger.valueOf(value)));
+            map.put(key, map.get(key).add(value));
         } else {
-            map.put(key, BigInteger.valueOf(1));
+            map.put(key, value);
         }
 
     }
@@ -65,19 +75,27 @@ public class Day14b extends Utils {
         List<String> valueSet = countTupleMap
                 .entrySet()
                 .stream()
-                .filter(value -> value.getValue().intValueExact() != 0)
+                .filter(value -> !value.getValue().equals(BigInteger.ZERO))
                 .map(s -> s.getKey())
                 .collect(Collectors.toList());
+        List<BigInteger> valueNum = countTupleMap
+                .entrySet()
+                .stream()
+                .filter(value -> !value.getValue().equals(BigInteger.ZERO))
+                .map(s -> s.getValue())
+                .collect(Collectors.toList());
 
-        for (String key : valueSet){
-            String toChar = rulesMap.get(key);
 
-            String firstCombi = key.charAt(0) + toChar;
-            String secondCombi = toChar + key.charAt(1);
-            increaseMap(toChar,countCharMap,1);
-            increaseMap(key, countTupleMap,-1);
-            increaseMap(firstCombi,countTupleMap,1);
-            increaseMap(secondCombi,countTupleMap,1);
+        for(int t= 0; t<valueSet.size(); t++){
+            String toChar = rulesMap.get(valueSet.get(t));
+            String tupple = valueSet.get(t);
+            BigInteger num = valueNum.get(t);
+            String firstCombi = tupple.charAt(0) + toChar;
+            String secondCombi = toChar + tupple.charAt(1);
+            increaseMap(toChar,countCharMap,num);
+            increaseMap(tupple, countTupleMap,num.negate());
+            increaseMap(firstCombi,countTupleMap,num);
+            increaseMap(secondCombi,countTupleMap,num);
         }
     }
 
