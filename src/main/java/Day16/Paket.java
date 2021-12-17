@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 public class Paket {
 
-    int version;
-    int id;
-    int length;
-    int value;
+    int V;
+    int T;
     int I;
-
+    int L;
+    int value;
 }
