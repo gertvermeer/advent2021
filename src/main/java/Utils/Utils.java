@@ -10,13 +10,11 @@ public class Utils {
 
 
     public List<String> readfile(String filename){
-        if(!filename.contains(".txt")){
-            filename = "input"+filename+".txt";
-        }
+
 
         List<String> resultsList = new ArrayList<String>();
         try {
-            File myObj = new File("src/main/resources/"+ filename);
+            File myObj = new File("src/main/java/Advent2022"+filename);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -34,7 +32,7 @@ public class Utils {
     public List<Integer> readIntegerFile(String filename){
         List<Integer> resultsList = new ArrayList<Integer>();
         try {
-            File myObj = new File("src/main/resources/"+ filename);
+            File myObj = new File("src/main/java/Advent2022"+filename);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 resultsList.add(Integer.parseInt(myReader.nextLine()));
@@ -53,7 +51,7 @@ public class Utils {
 
             boolean initialized = false;
 
-            File myObj = new File("src/main/resources/"+ filename);
+            File myObj = new File("src/main/java/Advent2022"+filename);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String readString = myReader.nextLine();

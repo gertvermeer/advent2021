@@ -1,5 +1,8 @@
 package Day4;
 
+import Advent2021.Day4.BingoCard;
+import Advent2021.Day4.Day4;
+import Advent2021.Day4.Day4b;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

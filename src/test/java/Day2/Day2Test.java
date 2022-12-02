@@ -1,5 +1,7 @@
 package Day2;
 
+import Advent2021.Day2.Day2a;
+import Advent2021.Day2.Day2b;
 import org.junit.jupiter.api.Test;
 
 class Day2Test {

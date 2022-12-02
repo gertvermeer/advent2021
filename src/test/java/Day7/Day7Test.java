@@ -1,5 +1,7 @@
 package Day7;
 
+import Advent2021.Day7.Day7;
+import Advent2021.Day7.Day7b;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

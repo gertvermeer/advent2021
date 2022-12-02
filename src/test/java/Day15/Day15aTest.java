@@ -1,8 +1,8 @@
 package Day15;
 
+import Advent2021.Day15.Day15a;
+import Advent2021.Day15.Day15b;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class Day15aTest {
 
