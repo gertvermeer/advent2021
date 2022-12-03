@@ -4,6 +4,7 @@ import Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -12,50 +13,43 @@ public class Solve {
     Utils utils = new Utils();
 
     public int solve1(){
-        List<String> input = utils.readfile("/day1/input1.txt");
-
-        int max = 0;
-        int counter = 0;
-        int pointer = 0;
-        Integer sum =0;
-        while (pointer < input.size()){
-            while (pointer <input.size() && !input.get(pointer).equals("")){
-                sum = sum + Integer.parseInt(input.get(pointer));
-                pointer ++;
-            }
-            if (sum > max){
-                max = sum;
-            }
-            sum = 0;
-            pointer ++;
-        }
-
-        return max;
+        List<String> input = utils.readfile("/day2/input1.txt");
+       int pointer = 0;
+       int score =0;
+        HashMap<Symbols, Integer> shapeScore = new HashMap<>();
+        shapeScore.put(Symbols.Rock, 1);
+        shapeScore.put(Symbols.Paper, 2);
+        shapeScore.put(Symbols.Siccor, 3);
+       while(pointer<input.size()){
+           Symbols him = Symbols.from(input.get(pointer).substring(0,1));
+           Symbols me = Symbols.from(input.get(pointer).substring(2,3));
+           score = score +Symbols.Score(him,me);
+           System.out.print(score + "-");
+           score = score + shapeScore.get(me);
+           System.out.println(score);
+           pointer ++;
+       }
+        return score;
     }
 
     public int solve2(){
-        List<String> input = utils.readfile("/day1/input1.txt");
-
-        int max = 0;
-        int counter = 0;
+        List<String> input = utils.readfile("/day2/input1.txt");
         int pointer = 0;
-        Integer sum =0;
-        List<Integer> totalList = new ArrayList<>();
-        while (pointer < input.size()){
-            while (pointer <input.size() && !input.get(pointer).equals("")){
-                sum = sum + Integer.parseInt(input.get(pointer));
-                pointer ++;
-            }
-            totalList.add(sum);
-            sum = 0;
+        int score =0;
+        HashMap<Symbols, Integer> shapeScore = new HashMap<>();
+        shapeScore.put(Symbols.Rock, 1);
+        shapeScore.put(Symbols.Paper, 2);
+        shapeScore.put(Symbols.Siccor, 3);
+        while(pointer<input.size()){
+            Symbols him = Symbols.from(input.get(pointer).substring(0,1));
+            Symbols me = Symbols.opponwnt(him,input.get(pointer).substring(2,3));
+            score = score +Symbols.Score(him,me);
+            System.out.print(score + "-");
+            score = score + shapeScore.get(me);
+            System.out.println(score);
             pointer ++;
         }
-        Collections.sort(totalList,Collections.reverseOrder());
-
-        List<Integer> test = totalList.subList(0,3);
-
-        return  totalList.subList(0,3).stream().reduce(0, Integer::sum);
-
+        return score;
     }
 
     public static void main(String[] args) {
